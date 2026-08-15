@@ -2,6 +2,8 @@ import Ajv2020 from "ajv/dist/2020.js";
 import { getDb, json, logInteraction, parseJson } from "./db.js";
 import { formatAnalysis, formatProgram } from "./formatters.js";
 import { validateTrainingDaysAnswer } from "./inputValidation.js";
+import { requiresSportSpecificPlanning } from "./knowledgeBase.js";
+import { normalizeMuscleGroupList } from "./exerciseSearch.js";
 import { generateProgram, parseAndAnalyzeProgram } from "./programEngine.js";
 
 const PROGRAM_FIELDS = [
@@ -18,6 +20,7 @@ const PROGRAM_FIELDS = [
 ];
 
 const REQUIRED_PROGRAM_FIELDS = ["goal", "level", "days_per_week", "equipment", "injuries"];
+const MUSCLE_LIST_FIELDS = ["priority_muscles", "deemphasized_muscles"];
 
 export const COACH_TOOLS = [
   {
@@ -100,14 +103,14 @@ export function migrateLegacyConversationState(userId, database = getDb()) {
   database.prepare("DELETE FROM user_state WHERE user_id = ?").run(userId);
 }
 
-export function createCoachToolExecutor(userId, database = getDb()) {
+export function createCoachToolExecutor(userId, { userMessage = "", database = getDb() } = {}) {
   return async (name, args = {}) => {
     const validateArguments = toolArgumentValidators.get(name);
     if (!validateArguments) return { status: "error", error: `Bilinmeyen arac: ${name}` };
     if (!args || typeof args !== "object" || Array.isArray(args) || !validateArguments(args)) {
       return { status: "error", error: "Gecersiz arac argumanlari." };
     }
-    if (name === "prepare_training_program") return prepareTrainingProgram(userId, args, database);
+    if (name === "prepare_training_program") return prepareTrainingProgram(userId, args, database, userMessage);
     if (name === "analyze_training_program") return analyzeTrainingProgram(userId, args, database);
     if (name === "discard_training_draft") return discardTrainingDraft(userId, args, database);
   };
@@ -129,7 +132,15 @@ function discardTrainingDraft(userId, args, database) {
   return { status: result.changes ? "discarded" : "not_found", kind: args.kind };
 }
 
-function prepareTrainingProgram(userId, args, database) {
+function prepareTrainingProgram(userId, args, database, userMessage = "") {
+  if (requiresSportSpecificPlanning(userMessage)) {
+    return {
+      status: "out_of_scope",
+      reason: "sport_specific",
+      instruction: "Bu istek bransa ozgu; klasik gym program aracini kullanma. Dal, hedef, deneyim, mevcut yuk ve saglik baglamini konusarak devam et."
+    };
+  }
+
   const currentDraft = getDraft(userId, "program_creation", database);
   const nextDraft = { ...currentDraft };
   let invalidDays = null;
@@ -139,7 +150,8 @@ function prepareTrainingProgram(userId, args, database) {
   }
   for (const field of PROGRAM_FIELDS) {
     if (field === "days_per_week" && invalidDays) continue;
-    if (Object.hasOwn(args, field) && args[field] !== null) nextDraft[field] = args[field];
+    if (!Object.hasOwn(args, field) || args[field] === null) continue;
+    nextDraft[field] = MUSCLE_LIST_FIELDS.includes(field) ? normalizeMuscleGroupList(args[field]) : args[field];
   }
   if (invalidDays) {
     if (Object.keys(nextDraft).length) saveDraft(userId, "program_creation", nextDraft, database);

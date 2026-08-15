@@ -366,12 +366,20 @@ function restFor(slot, goal) {
 }
 
 function riskTagsFromProfile(profile) {
-  const text = [...(profile.injuries || []), ...(profile.excluded_exercises || [])].join(" ").toLowerCase();
+  const text = normalizeTurkishText([...(profile.injuries || []), ...(profile.excluded_exercises || [])].join(" "));
   const tags = [];
-  if (text.includes("bel") || text.includes("back")) tags.push("lower_back_load");
+  if (text.includes("bel") || text.includes("back") || text.includes("sirt") || text.includes("lomber")) tags.push("lower_back_load");
   if (text.includes("diz") || text.includes("knee")) tags.push("knee_load");
   if (text.includes("omuz") || text.includes("shoulder")) tags.push("shoulder_stress");
   return tags;
+}
+
+function normalizeTurkishText(value) {
+  return String(value || "")
+    .toLocaleLowerCase("tr-TR")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replaceAll("ı", "i");
 }
 
 function normalizeExerciseText(value) {

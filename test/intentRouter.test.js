@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { classifyTopic, extractDaysPerWeek, extractStandaloneDaysPerWeek, isExerciseFormRequest, routeMessage } from "../src/intentRouter.js";
+import { classifyTopic, extractStandaloneDaysPerWeek, isExerciseFormRequest, routeMessage } from "../src/intentRouter.js";
 
 test("ordinary fitness conversation stays conversational", () => {
   assert.equal(routeMessage("Bugünkü antrenmanım hakkında ne düşünüyorsun?"), "conversation");
@@ -34,12 +34,6 @@ test("general injury-prevention questions stay in the sport knowledge flow", () 
   assert.equal(classifyTopic("Dizim sakatlandi, agrim var; tekrarini nasil onlerim?"), "injury");
   assert.equal(classifyTopic("Omuz sakatligimin tekrarini nasil onlerim?"), "injury");
   assert.equal(classifyTopic("Diz yaralanmam tekrar etmesin diye riski nasil azaltirim?"), "injury");
-});
-
-test("weekly training days are understood from digits and Turkish number words", () => {
-  assert.equal(extractDaysPerWeek("Haftada 5 gün program istiyorum"), 5);
-  assert.equal(extractDaysPerWeek("Haftada dört günlük program hazırla"), 4);
-  assert.equal(extractDaysPerWeek("Programımı değiştirme"), null);
 });
 
 test("a pasted workout list is classified as program analysis", () => {

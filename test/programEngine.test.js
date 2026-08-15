@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { parseAndAnalyzeExtractedWorkout, parseAndAnalyzeProgram } from "../src/programEngine.js";
+import { generateProgram, parseAndAnalyzeExtractedWorkout, parseAndAnalyzeProgram } from "../src/programEngine.js";
 
 test("program analysis uses the user's training level", () => {
   const result = parseAndAnalyzeProgram("Bench Press 4 set x 8", { level: "beginner" });
@@ -28,6 +28,25 @@ test("common split names are parsed as separate workout days", () => {
   assert.equal(result.program.days.length, 3);
   assert.equal(result.analysis.muscle_sets.chest, 4);
   assert.equal(result.analysis.muscle_frequency.chest, 1);
+});
+
+test("a Turkish description of back pain excludes lower-back-loading exercises", () => {
+  const profile = {
+    goal: "muscle_gain",
+    level: "intermediate",
+    days_per_week: 4,
+    equipment: ["gym"],
+    injuries: ["sirtim agriyor"],
+    excluded_exercises: [],
+    session_duration_min: 60
+  };
+
+  const { program } = generateProgram(profile);
+  const riskyExercise = program.days
+    .flatMap((day) => day.exercises)
+    .find((item) => (item.exercise?.risk_tags || []).includes("lower_back_load"));
+
+  assert.equal(riskyExercise, undefined);
 });
 
 test("a single image workout uses the same weekly repetition input", () => {

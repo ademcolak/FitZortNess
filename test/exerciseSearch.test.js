@@ -8,7 +8,7 @@ const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "fitzortness-test-"));
 process.env.DB_PATH = path.join(tempDir, "test.db");
 
 const { getDb } = await import("../src/db.js");
-const { findExerciseByName, findExercises } = await import("../src/exerciseSearch.js");
+const { findExerciseByName, findExercises, normalizeMuscleGroupList } = await import("../src/exerciseSearch.js");
 
 test.after(() => {
   getDb().close();
@@ -81,6 +81,17 @@ test("a plural or compound equipment answer still matches its singular dataset v
 
   const results = findExercises({ targetMuscles: ["glutes"], equipment: ["kettlebells"], limit: 10 });
   assert.deepEqual(results.map((exercise) => exercise.name), ["Kettlebell Swing"]);
+});
+
+test("Turkish free-text muscle group answers normalize to the canonical vocabulary", () => {
+  assert.deepEqual(normalizeMuscleGroupList(["karin"]), ["abs"]);
+  assert.deepEqual(normalizeMuscleGroupList(["sirt"]), ["back"]);
+  assert.deepEqual(normalizeMuscleGroupList(["sırt"]), ["back"]);
+  assert.deepEqual(normalizeMuscleGroupList(["on bacak"]), ["quads"]);
+  assert.deepEqual(normalizeMuscleGroupList(["kalca"]), ["glutes"]);
+  assert.deepEqual(normalizeMuscleGroupList(["abs"]), ["abs"]);
+  assert.deepEqual(normalizeMuscleGroupList(["abs", "karin"]), ["abs"]);
+  assert.deepEqual(normalizeMuscleGroupList([]), []);
 });
 
 test("a seeded equipment alias resolves before a broader fuzzy alias", () => {

@@ -15,6 +15,27 @@ const MUSCLE_GROUPS = {
   abs: ["abs", "waist"]
 };
 
+const MUSCLE_GROUP_SYNONYMS = {
+  chest: ["chest", "gogus", "pectoral", "pektoral"],
+  back: ["back", "sirt", "kanat", "lat", "lats"],
+  quads: ["quads", "quadriceps", "bacak", "on bacak", "uyluk", "quad"],
+  hamstrings: ["hamstrings", "hamstring", "arka bacak", "arka uyluk"],
+  glutes: ["glutes", "glute", "kalca", "popo"],
+  shoulders: ["shoulders", "shoulder", "omuz", "delt", "delts"],
+  biceps: ["biceps", "bicep", "pazi", "on kol"],
+  triceps: ["triceps", "tricep", "arka kol"],
+  abs: ["abs", "karin", "gobek", "core", "waist"]
+};
+
+const MUSCLE_GROUP_SYNONYM_LOOKUP = new Map(
+  Object.entries(MUSCLE_GROUP_SYNONYMS).flatMap(([canonical, synonyms]) => synonyms.map((synonym) => [normalizeTurkishText(synonym), canonical]))
+);
+
+export function normalizeMuscleGroupList(values) {
+  const normalized = (values || []).map((value) => MUSCLE_GROUP_SYNONYM_LOOKUP.get(normalizeTurkishText(value)) || normalizeTurkishText(value));
+  return [...new Set(normalized.filter(Boolean))];
+}
+
 export function findExercises({ targetMuscles = [], equipment = [], patterns = [], excludeRiskTags = [], excludeIds = [], excludeNames = [], limit = 8 }) {
   const rows = getDb().prepare(`
     SELECT e.*, m.*
@@ -166,6 +187,15 @@ function toExercise(row) {
 
 function normalize(value) {
   return String(value || "").toLowerCase();
+}
+
+function normalizeTurkishText(value) {
+  return String(value || "")
+    .toLocaleLowerCase("tr-TR")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replaceAll("ı", "i")
+    .trim();
 }
 
 const GYM_ACCESS_PHRASES = new Set([

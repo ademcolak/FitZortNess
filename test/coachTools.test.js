@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-async function withFreshDatabase(run) {
+async function withFreshDatabase(run, { userMessage = "" } = {}) {
   const directory = mkdtempSync(path.join(tmpdir(), "fitzortness-agent-tools-"));
   process.env.DB_PATH = path.join(directory, "test.db");
   let database;
@@ -13,7 +13,7 @@ async function withFreshDatabase(run) {
     const { createCoachToolExecutor, getActiveCoachDrafts } = await import(`../src/coachTools.js?test=${Date.now()}-${Math.random()}`);
     const user = getOrCreateUser({ id: Math.floor(Math.random() * 1_000_000), first_name: "Test" });
     database = getDb();
-    await run({ database, user, execute: createCoachToolExecutor(user.id, database), getDrafts: () => getActiveCoachDrafts(user.id, database) });
+    await run({ database, user, execute: createCoachToolExecutor(user.id, { userMessage, database }), getDrafts: () => getActiveCoachDrafts(user.id, database) });
   } finally {
     database?.close();
     rmSync(directory, { recursive: true, force: true });
@@ -93,5 +93,29 @@ test("malformed model tool arguments are rejected before draft persistence", asy
 
     assert.deepEqual(result, { status: "error", error: "Gecersiz arac argumanlari." });
     assert.deepEqual(getDrafts(), []);
+  });
+});
+
+test("a sport-specific request keeps the classic gym program tool from firing", async () => {
+  await withFreshDatabase(async ({ execute, getDrafts }) => {
+    const result = await execute("prepare_training_program", { goal: "general_fitness", generate: false });
+
+    assert.equal(result.status, "out_of_scope");
+    assert.equal(result.reason, "sport_specific");
+    assert.deepEqual(getDrafts(), []);
+  }, { userMessage: "yuzme icin haftalik program hazirlar misin?" });
+});
+
+test("free-text priority and deemphasized muscles are normalized to the canonical vocabulary", async () => {
+  await withFreshDatabase(async ({ execute, getDrafts }) => {
+    const result = await execute("prepare_training_program", {
+      priority_muscles: ["karin"],
+      deemphasized_muscles: ["sirt"],
+      generate: false
+    });
+
+    assert.deepEqual(result.collected.priority_muscles, ["abs"]);
+    assert.deepEqual(getDrafts()[0].payload.priority_muscles, ["abs"]);
+    assert.deepEqual(getDrafts()[0].payload.deemphasized_muscles, ["back"]);
   });
 });

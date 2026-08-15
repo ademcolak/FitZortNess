@@ -109,7 +109,17 @@ test("low-information speech is handled by the agent while the draft remains ava
   assert.match(result.sent.at(-1), /sohbet edelim/i);
 });
 
-for (const command of ["/start", "/profile", "/new_program", "/analyze_program", "/feedback", "/limits", "/reset", "/skip", "/help"]) {
+test("/start sends a one-time welcome and creates the user", () => {
+  const result = runMessages(["/start"]);
+
+  assert.equal(result.userCount, 1);
+  assert.equal(result.sent.length, 1);
+  assert.match(result.sent[0], /FitZortNess/);
+  assert.equal(result.stateCount, 0);
+  assert.equal(result.draftCount, 0);
+});
+
+for (const command of ["/profile", "/new_program", "/analyze_program", "/feedback", "/limits", "/reset", "/skip", "/help"]) {
   test(`${command} has no effect for a normal user`, () => {
     const result = runMessages([command]);
 

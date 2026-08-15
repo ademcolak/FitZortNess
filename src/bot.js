@@ -18,6 +18,7 @@ import { sendApprovedAnimation } from "./telegramMedia.js";
 
 const conversationContext = new AsyncLocalStorage();
 const sessionEvaluator = createSessionEvaluator({ tracker: conversationTracker, evaluateWithModel: evaluateConversationSession });
+const WELCOME_TEXT = "Merhaba! Ben FitZortNess, antrenman programi olusturma, program analizi ve genel fitness sorularinda yardimci oluyorum. Ne istersen dogal bir cumleyle yazabilirsin, ornegin \"kas kazanimi icin 4 gunluk program hazirla\" gibi.";
 const ADMIN_COMMANDS = new Set([
   "/admin_users",
   "/admin_usage",
@@ -81,6 +82,11 @@ export async function handleMessage(message) {
   const text = message.text?.trim();
   const commandName = text?.split(/\s+/, 1)[0];
   const isAdminCommand = isAdminUser && message.chat.type === "private" && (commandName === "/help" || ADMIN_COMMANDS.has(commandName));
+  if (commandName === "/start" && !isAdminCommand) {
+    getOrCreateUser(message.from);
+    await send(chatId, WELCOME_TEXT);
+    return;
+  }
   if (text?.startsWith("/") && !isAdminCommand) return;
 
   const user = getOrCreateUser(message.from);
@@ -275,7 +281,7 @@ async function chatWithCoach(chatId, userId, userMessage) {
     activeDrafts: getActiveCoachDrafts(userId),
     fallbackText,
     tools: COACH_TOOLS,
-    executeTool: createCoachToolExecutor(userId)
+    executeTool: createCoachToolExecutor(userId, { userMessage })
   });
   if (coachResult.error) logError({ userId, scope: "coach_agent", error: coachResult.error });
   recordCoachInteraction(userId, "coach_conversation_reply", coachResult);

@@ -28,23 +28,6 @@ export function formatProgram(program, analysis) {
   return lines.join("\n");
 }
 
-export function formatProfile(profile) {
-  if (!profile) return "Profil yok. Program istediginde birlikte olusturabiliriz.";
-  return [
-    `Hedef: ${profile.goal || "-"}`,
-    `Seviye: ${profile.level || "-"}`,
-    `Boy/kilo/yas: ${profile.height_cm || "-"} cm / ${profile.weight_kg || "-"} kg / ${profile.age || "-"}`,
-    `Gun: ${profile.days_per_week || "-"}`,
-    `Ekipman: ${(profile.equipment || []).join(", ") || "-"}`,
-    `Oncelik: ${(profile.priority_muscles || []).join(", ") || "denge"}`,
-    `Dusuk oncelik: ${(profile.deemphasized_muscles || []).join(", ") || "yok"}`,
-    `Split tercihi: ${profile.preferred_split || "fark etmez"}`,
-    `Sakatlik/kisit: ${(profile.injuries || []).join(", ") || "yok"}`,
-    `Istenmeyen hareket: ${(profile.excluded_exercises || []).join(", ") || "yok"}`,
-    `Sure: ${profile.session_duration_min || "-"} dk`
-  ].join("\n");
-}
-
 export function formatAnalysis(result) {
   const lines = ["Program analiz sonucu:"];
   const issues = result.analysis.issues || [];

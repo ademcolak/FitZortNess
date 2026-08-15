@@ -23,16 +23,6 @@ export function routeMessage(text) {
   return "conversation";
 }
 
-export function extractDaysPerWeek(text) {
-  const normalized = normalize(text);
-  const digitMatch = normalized.match(/(?:haftada\s*)?([3-5])\s*gun/);
-  if (digitMatch) return Number(digitMatch[1]);
-
-  const wordMatch = normalized.match(/(?:haftada\s*)?(uc|dort|bes)\s*gun/);
-  if (!wordMatch) return null;
-  return { uc: 3, dort: 4, bes: 5 }[wordMatch[1]];
-}
-
 export function extractStandaloneDaysPerWeek(text) {
   const normalized = normalize(text).trim();
   const standaloneMatch = normalized.match(/^([1-7])$/);
