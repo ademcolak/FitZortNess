@@ -1,0 +1,206 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "splits",
+  "items": [
+    {
+      "id": "split.full_body",
+      "kind": "split_pattern",
+      "canonical_name": "full_body",
+      "aliases": ["full body", "fullbody", "tum vucut", "tam vucut"],
+      "classification": "full_body",
+      "definition_tr": "Bir seansta ana kas gruplarinin cogunu calistiran dagitim.",
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["weekly_schedule"] },
+      "claim_ids": ["claim.split.volume_equated_equivalence", "claim.frequency.volume_distribution", "claim.health.major_muscles_two_days", "claim.split.selection_context"]
+    },
+    {
+      "id": "split.upper_lower",
+      "kind": "split_pattern",
+      "canonical_name": "upper_lower",
+      "aliases": ["upper lower", "upper/lower", "ust alt", "ust vucut alt vucut"],
+      "classification": "split",
+      "definition_tr": "Ust ve alt vucut hareketlerini farkli seanslara dagitan split.",
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["weekly_schedule"] },
+      "claim_ids": ["claim.split.volume_equated_equivalence", "claim.frequency.volume_distribution", "claim.split.selection_context"]
+    },
+    {
+      "id": "split.push_pull_legs",
+      "kind": "split_pattern",
+      "canonical_name": "push_pull_legs",
+      "aliases": ["ppl", "push pull legs", "itis cekis bacak", "itme cekme bacak"],
+      "classification": "split",
+      "definition_tr": "Itme kaslarini, cekme kaslarini ve bacaklari ayri seanslara dagitan split.",
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["weekly_schedule"] },
+      "claim_ids": ["claim.split.volume_equated_equivalence", "claim.frequency.volume_distribution", "claim.split.selection_context"]
+    },
+    {
+      "id": "split.body_part",
+      "kind": "split_pattern",
+      "canonical_name": "body_part",
+      "aliases": ["bro split", "body part split", "kas grubu split"],
+      "classification": "split",
+      "definition_tr": "Seanslari gogus, sirt, omuz, kol ve bacak gibi bolgelere ayiran split.",
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["weekly_schedule"] },
+      "claim_ids": ["claim.split.volume_equated_equivalence", "claim.frequency.volume_distribution", "claim.split.selection_context"]
+    },
+    {
+      "id": "split.movement_pattern",
+      "kind": "split_pattern",
+      "canonical_name": "movement_pattern",
+      "aliases": ["movement pattern", "movement pattern split", "hareket oruntusu", "push pull", "push pull split", "squat hinge", "squat hinge split", "hinge squat"],
+      "classification": "split",
+      "definition_tr": "Seanslari squat, hinge, itme ve cekme gibi hareket oruntulerine gore ayiran split.",
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["weekly_schedule"] },
+      "claim_ids": ["claim.split.selection_context"]
+    },
+    {
+      "id": "split.hybrid",
+      "kind": "split_pattern",
+      "canonical_name": "hybrid",
+      "aliases": ["hybrid split", "hibrit program", "power hypertrophy split"],
+      "classification": "split",
+      "definition_tr": "Birden fazla dagitim veya hedef duzenini birlestiren program yapisi.",
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["weekly_schedule"] },
+      "claim_ids": ["claim.split.selection_context"]
+    },
+    {
+      "id": "program.phat",
+      "kind": "named_program",
+      "canonical_name": "phat",
+      "aliases": ["phat", "power hypertrophy adaptive training"],
+      "classification": "creator_named_program",
+      "definition_tr": "Layne Norton tarafindan adlandirilmis guc ve hipertrofi odakli program ailesi.",
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["program_version", "weekly_schedule"] },
+      "claim_ids": ["claim.phat.require_schedule", "claim.split.selection_context"]
+    },
+    {
+      "id": "program.five_three_one",
+      "kind": "named_program",
+      "canonical_name": "five_three_one",
+      "aliases": ["5/3/1", "five three one", "wendler"],
+      "classification": "creator_program_system",
+      "definition_tr": "Jim Wendler'in birden fazla sablon ve surum iceren program sistemi.",
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["program_version", "weekly_schedule"] },
+      "claim_ids": ["claim.five_three_one.require_schedule"]
+    },
+    {
+      "id": "program.phul",
+      "kind": "named_program",
+      "canonical_name": "phul",
+      "aliases": ["phul", "power hypertrophy upper lower"],
+      "classification": "ambiguous_named_template",
+      "definition_tr": "Farkli surumleri bulunan popular bir guc ve hipertrofi etiketi.",
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["program_version", "weekly_schedule"] },
+      "claim_ids": []
+    },
+    {
+      "id": "program.arnold_split",
+      "kind": "named_program",
+      "canonical_name": "arnold_split",
+      "aliases": ["arnold split", "arnold programi", "arnold program"],
+      "classification": "ambiguous_template_alias",
+      "definition_tr": "Tek bir standart recete gibi varsayilmamasi gereken popular split etiketi.",
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["weekly_schedule"] },
+      "claim_ids": []
+    },
+    {
+      "id": "method.calisthenics",
+      "kind": "training_method",
+      "canonical_name": "calisthenics",
+      "aliases": ["calisthenics", "calisthenic", "kalistenik", "street workout", "bodyweight training", "vucut agirligi antrenmani"],
+      "classification": "bodyweight_strength_and_skill_method",
+      "definition_tr": "Temel direncin vucut kutlesi ve kaldirac kosullarindan geldigi; kuvvet, beceri ve dayaniklilik calismalarini kapsayan antrenman ailesi.",
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["goal", "experience", "current_skill_level", "equipment", "weekly_schedule"] },
+      "claim_ids": ["claim.rt.bodyweight_effective", "claim.calisthenics.progress_variation", "claim.calisthenics.require_context", "claim.health.major_muscles_two_days"]
+    },
+    {
+      "id": "method.crossfit",
+      "kind": "training_method",
+      "canonical_name": "crossfit_brand_context",
+      "aliases": ["crossfit", "cross fit"],
+      "classification": "brand_defined_mixed_modal_methodology",
+      "definition_tr": "CrossFit tarafindan surekli degisken fonksiyonel hareketlerin kisiye gore yuksek siddette uygulanmasi olarak tanimlanan marka metodolojisi.",
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["goal", "experience", "equipment", "recent_training", "weekly_schedule"] },
+      "claim_ids": ["claim.crossfit.definition", "claim.crossfit.mechanics_first", "claim.crossfit.scaling_stimulus", "claim.crossfit.rxd_not_required", "claim.crossfit.require_context"]
+    },
+    {
+      "id": "format.wod",
+      "kind": "workout_format",
+      "canonical_name": "wod",
+      "aliases": ["wod", "workout of the day"],
+      "classification": "workout_reference",
+      "definition_tr": "Workout of the Day; belirli bir gun icin yazilan calisma referansi.",
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["workout_details", "variant", "movement_standards"] },
+      "claim_ids": ["claim.crossfit.formats", "claim.crossfit.require_context"]
+    },
+    {
+      "id": "format.amrap",
+      "kind": "workout_format",
+      "canonical_name": "amrap",
+      "aliases": ["amrap", "as many rounds as possible", "as many reps as possible"],
+      "classification": "time_bounded_rounds_or_reps",
+      "definition_tr": "Verilen surede mumkun olan en cok tur veya tekrari tamamlama formati.",
+      "inference_policy": { "name_alone_is_sufficient": true, "required_user_fields": [] },
+      "claim_ids": ["claim.crossfit.formats", "claim.crossfit.scaling_stimulus"]
+    },
+    {
+      "id": "format.emom",
+      "kind": "workout_format",
+      "canonical_name": "emom",
+      "aliases": ["emom", "every minute on the minute"],
+      "classification": "minute_interval_work",
+      "definition_tr": "Her dakikanin basinda belirtilen isin yapildigi interval formati.",
+      "inference_policy": { "name_alone_is_sufficient": true, "required_user_fields": [] },
+      "claim_ids": ["claim.crossfit.formats", "claim.crossfit.scaling_stimulus"]
+    },
+    {
+      "id": "format.for_time",
+      "kind": "workout_format",
+      "canonical_name": "for_time",
+      "aliases": ["for time"],
+      "classification": "completion_time_workout",
+      "definition_tr": "Belirlenen isi tamamlama suresinin skorlandigi format.",
+      "inference_policy": { "name_alone_is_sufficient": true, "required_user_fields": [] },
+      "claim_ids": ["claim.crossfit.formats", "claim.crossfit.scaling_stimulus"]
+    },
+    {
+      "id": "format.chipper",
+      "kind": "workout_format",
+      "canonical_name": "chipper",
+      "aliases": ["chipper"],
+      "classification": "sequential_completion_workout",
+      "definition_tr": "Her hareketin yazili tekrarlari bitirilip siradaki harekete gecilen format.",
+      "inference_policy": { "name_alone_is_sufficient": true, "required_user_fields": [] },
+      "claim_ids": ["claim.crossfit.formats", "claim.crossfit.scaling_stimulus"]
+    },
+    {
+      "id": "variant.rxd",
+      "kind": "workout_variant",
+      "canonical_name": "rxd",
+      "aliases": ["rx'd", "rxd", "rx"],
+      "classification": "as_prescribed_variant",
+      "definition_tr": "Calismanin yazildigi gibi uygulanan surumu; kisinin degeri veya basari zorunlulugu degildir.",
+      "inference_policy": { "name_alone_is_sufficient": true, "required_user_fields": [] },
+      "claim_ids": ["claim.crossfit.rxd_not_required", "claim.crossfit.scaling_stimulus"]
+    },
+    {
+      "id": "variant.scaled",
+      "kind": "workout_variant",
+      "canonical_name": "scaled",
+      "aliases": ["scaled", "scaled workout", "scaled wod"],
+      "classification": "capacity_adjusted_variant",
+      "definition_tr": "Calismanin hareket, yuk veya hacminin sporcunun kapasitesine gore uyarlandigi surum.",
+      "inference_policy": { "name_alone_is_sufficient": true, "required_user_fields": [] },
+      "claim_ids": ["claim.crossfit.scaling_stimulus", "claim.crossfit.rxd_not_required"]
+    },
+    {
+      "id": "policy.anti_doping",
+      "kind": "sport_policy",
+      "canonical_name": "anti_doping_current_list",
+      "aliases": ["wada", "yasakli madde listesi", "doping listesi", "anti doping", "anti-doping"],
+      "classification": "living_anti_doping_authority",
+      "definition_tr": "Yarisma baglaminda yasakli madde ve yontemlerin guncel resmi listeye gore kontrol edilmesi gereken politika alani.",
+      "inference_policy": { "name_alone_is_sufficient": true, "required_user_fields": [] },
+      "claim_ids": ["claim.antidoping.current_list_required"]
+    }
+  ]
+}

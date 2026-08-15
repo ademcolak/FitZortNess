@@ -1,0 +1,238 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "claims",
+  "items": [
+    {
+      "id": "claim.split.volume_equated_equivalence",
+      "topics": ["split", "full_body", "upper_lower", "push_pull_legs", "body_part"],
+      "statement_tr": "Haftalik hacim esit oldugunda full-body ve split rutinleri ortalamada benzer kuvvet ve hipertrofi sonucu verir.",
+      "limitations_tr": "Bu bulgu her split alt turunun veya her bireyin ayni sonucu alacagini gostermez.",
+      "evidence_level": "systematic_review_meta_analysis",
+      "source_ids": ["source.split_meta_2024"]
+    },
+    {
+      "id": "claim.frequency.volume_distribution",
+      "topics": ["frequency", "split", "full_body", "upper_lower", "push_pull_legs"],
+      "statement_tr": "Hacim esitlendirilince frekans tek basina hipertrofiyi anlamli bicimde belirlemez; daha yuksek frekans hacmi seanslara dagitmak icin kullanilabilir.",
+      "limitations_tr": "Bireysel toparlanma, seans suresi ve toplam hacim yine de degerlendirilmelidir.",
+      "evidence_level": "systematic_review_meta_analysis",
+      "source_ids": ["source.frequency_meta_2019"]
+    },
+    {
+      "id": "claim.health.major_muscles_two_days",
+      "topics": ["beginner", "health", "frequency", "full_body"],
+      "statement_tr": "Genel saglik icin ana kas gruplarini haftada en az iki gun calistirmak guvenilir bir baslangic tabanidir.",
+      "limitations_tr": "Bir gun hic yoktan iyidir; bu taban klinik veya ozel gruplar icin bireysel degerlendirmenin yerini tutmaz.",
+      "evidence_level": "official_guideline",
+      "source_ids": ["source.acsm_2026", "source.who_2020"]
+    },
+    {
+      "id": "claim.split.selection_context",
+      "topics": ["split", "full_body", "upper_lower", "push_pull_legs", "body_part", "schedule"],
+      "statement_tr": "Split secimi hedef, deneyim, haftalik uygun gun, seans suresi ve toparlanmaya gore yapilmalidir; split adi tek basina kalite puani degildir.",
+      "limitations_tr": "Gun sayisina gore verilen splitler urun sezgisidir, tek bilimsel dogru degildir.",
+      "evidence_level": "evidence_informed_product_rule",
+      "source_ids": ["source.acsm_2026", "source.nsca_frequency", "source.split_meta_2024"]
+    },
+    {
+      "id": "claim.phat.require_schedule",
+      "topics": ["named_program", "phat"],
+      "statement_tr": "PHAT yaraticisi tarafindan adlandirilmis bir program ailesidir; etiket tek basina kullanicinin uyguladigi surumun recetesini gostermez.",
+      "limitations_tr": "Bot kullanicidan program surumunu veya haftalik programini istemelidir.",
+      "evidence_level": "creator_description_plus_product_rule",
+      "source_ids": ["source.biolayne_phat"]
+    },
+    {
+      "id": "claim.five_three_one.require_schedule",
+      "topics": ["named_program", "five_three_one", "wendler"],
+      "statement_tr": "5/3/1 birden fazla sablon ve surum iceren yaraticiya ait bir program sistemidir; etiket tek basina kullanicinin uyguladigi receteyi gostermez.",
+      "limitations_tr": "Bot kullanicidan program surumunu veya haftalik programini istemelidir.",
+      "evidence_level": "creator_catalog_plus_product_rule",
+      "source_ids": ["source.wendler_programs"]
+    },
+    {
+      "id": "claim.rt.bodyweight_effective",
+      "topics": ["calisthenics", "kalistenik", "bodyweight", "resistance_training", "beginner"],
+      "statement_tr": "Vucut agirligi egzersizleri saglikli yetiskinler icin etkili bir direnc antrenmani secenegi olabilir.",
+      "limitations_tr": "Bu ifade her ileri becerinin otomatik olarak kolay veya guvenli oldugu anlamina gelmez; klinik ve yarali gruplara otomatik genellenmemelidir.",
+      "evidence_level": "position_stand_umbrella_review",
+      "source_ids": ["source.acsm_2026"]
+    },
+    {
+      "id": "claim.calisthenics.progress_variation",
+      "topics": ["calisthenics", "kalistenik", "bodyweight", "progression", "push_up", "squat", "varyasyon"],
+      "statement_tr": "Yardim, kaldirac, hareket acikligi veya bilateral-unilateral varyasyon gibi zorluk eksenlerini kademeli degistirmek kuvvet progresyonu saglayabilir.",
+      "limitations_tr": "Kanit kucuk ve harekete ozel calismalardan gelir; tek bir progresyon sirasi her beceriye veya ileri sporcuya genellenemez.",
+      "evidence_level": "small_randomized_controlled_trials",
+      "source_ids": ["source.calisthenics_pushup_rct_2018", "source.calisthenics_squat_rct_2023"]
+    },
+    {
+      "id": "claim.calisthenics.require_context",
+      "topics": ["calisthenics", "kalistenik", "planche", "front_lever", "handstand", "muscle_up", "program"],
+      "statement_tr": "Bir calisthenics beceri adi tek basina program degildir; hedef, deneyim, mevcut temiz varyasyon, ekipman ve haftalik plan bilinmelidir.",
+      "limitations_tr": "Bot video veya yuz yuze degerlendirme olmadan ileri beceri yeterliligini kesinlestirmemeli ve evrensel bir beceri suresi vermemelidir.",
+      "evidence_level": "evidence_informed_product_rule",
+      "source_ids": ["source.acsm_2026", "source.calisthenics_pushup_rct_2018", "source.calisthenics_squat_rct_2023"]
+    },
+    {
+      "id": "claim.crossfit.definition",
+      "topics": ["crossfit", "cross_fit", "functional_fitness", "methodology"],
+      "statement_tr": "CrossFit kendi yontemini surekli degisken fonksiyonel hareketlerin kisiye gore yuksek siddette uygulanmasi olarak tanimlar.",
+      "limitations_tr": "Bu bir marka tanimidir; baska yontemlere karsi bagimsiz ustunluk veya guvenlik kaniti olarak sunulmamalidir.",
+      "evidence_level": "official_brand_definition",
+      "source_ids": ["source.crossfit_methodology"]
+    },
+    {
+      "id": "claim.crossfit.mechanics_first",
+      "topics": ["crossfit", "beginner", "technique", "mechanics", "consistency", "intensity"],
+      "statement_tr": "CrossFit'in kendi egitim sirasi mekanik, tutarlilik ve ardindan kisiye gore siddettir.",
+      "limitations_tr": "Bu resmi metodoloji tanimidir ve bireysel hareket teknigi degerlendirmesinin veya nitelikli kocun yerini tutmaz.",
+      "evidence_level": "official_brand_methodology",
+      "source_ids": ["source.crossfit_methodology", "source.crossfit_l1_guide_2026"]
+    },
+    {
+      "id": "claim.crossfit.scaling_stimulus",
+      "topics": ["crossfit", "wod", "scale", "scaled", "scaling", "uyaran", "load", "volume"],
+      "statement_tr": "CrossFit baglaminda olcekleme; yuk, hacim veya hareketi kapasiteye uyarlarken calismanin amaclanan uyaranini korumayi hedefler.",
+      "limitations_tr": "Tam olcekleme icin workout recetesi, hedef sure veya uyaran, kullanici kapasitesi ve hareket deneyimi bilinmelidir; yaralanma tedavisi olarak kullanilmaz.",
+      "evidence_level": "official_brand_methodology",
+      "source_ids": ["source.crossfit_methodology", "source.crossfit_faq_2026", "source.crossfit_l1_guide_2026"]
+    },
+    {
+      "id": "claim.crossfit.formats",
+      "topics": ["crossfit", "wod", "amrap", "emom", "for_time", "chipper", "workout_format"],
+      "statement_tr": "WOD gunun calismasini; AMRAP verilen surede en cok tur veya tekrari; EMOM her dakikanin basinda belirtilen isi; for-time ise belirli isi sureye karsi tamamlamayi ifade eder.",
+      "limitations_tr": "Format yalnizca calismanin zaman ve skor yapisini aciklar; uygun hareketi, dozu veya kisinin yapmasi gereken tam programi tek basina belirlemez.",
+      "evidence_level": "official_glossary",
+      "source_ids": ["source.crossfit_terms_2024"]
+    },
+    {
+      "id": "claim.crossfit.rxd_not_required",
+      "topics": ["crossfit", "rxd", "rx", "scaled", "modified"],
+      "statement_tr": "Rx'd yazildigi gibi uygulanan surumdur; resmi aciklamada en fit sporculari zorlamak icin tasarlanir ve cogu sporcunun olceklemesi veya degistirmesi beklenir.",
+      "limitations_tr": "Rx veya scaled etiketi tek basina kalite, emek ya da kullanici degeri puani degildir; karsilastirmada gercek kosullar kaydedilmelidir.",
+      "evidence_level": "official_glossary",
+      "source_ids": ["source.crossfit_terms_2024"]
+    },
+    {
+      "id": "claim.crossfit.require_context",
+      "topics": ["crossfit", "wod", "program", "benchmark", "score", "scaling"],
+      "statement_tr": "Bir WOD veya CrossFit etiketi tek basina kisilestirilmis haftalik program degildir; hedef, deneyim, ekipman, yakin donem hacim ve gercek workout ayrintilari sorulmalidir.",
+      "limitations_tr": "Bot resmi benchmark kataloglarini veya Hero workout recetelerini kopyalamamali; kullanicinin verdigi receteyi analiz etmeli ya da resmi kaynaga baglanmalidir.",
+      "evidence_level": "brand_definition_plus_product_rule",
+      "source_ids": ["source.crossfit_methodology", "source.crossfit_faq_2026", "source.crossfit_terms_2024"]
+    },
+    {
+      "id": "claim.multisport.context_required",
+      "topics": ["sport", "program", "goal", "experience", "season", "equipment", "load"],
+      "statement_tr": "Bir spor programi; dal, alt disiplin veya rol, hedef, deneyim, mevcut yuk, sezon, ekipman ve saglik baglami bilinmeden guvenilir bicimde kisilestirilemez.",
+      "limitations_tr": "Bu bir urun guvenlik kuralidir; eksik alanlar tek seferde forma donusturulmemeli, karari en cok degistiren birkac soru sorulmalidir.",
+      "evidence_level": "consensus_informed_product_rule",
+      "source_ids": ["source.ioc_load_2016", "source.who_2020"]
+    },
+    {
+      "id": "claim.multisport.rules_are_versioned",
+      "topics": ["sport", "rules", "competition", "federation", "version"],
+      "statement_tr": "Yarisma kurallari spor, organizasyon ve surume baglidir; kesin kural yanitinda guncel resmi belge kontrol edilmelidir.",
+      "limitations_tr": "Bot hakem karari veya tum organizasyonlar icin evrensel kural uretmemeli; ilgili federasyon ve etkinlik farkini belirtmelidir.",
+      "evidence_level": "governing_body_product_rule",
+      "source_ids": ["source.world_athletics_rules_2026", "source.uci_regulations_2026", "source.ifab_laws_2026", "source.fiba_rules_2024", "source.fivb_rules_2025_2028", "source.itf_rules_2026", "source.ittf_statutes_2026", "source.uww_rules_2026", "source.ijf_rules_2026", "source.iwf_rules_2026", "source.ipf_rules_2026", "source.fig_rules_2026", "source.world_aquatics_rules_2026", "source.fis_rules_2026", "source.ipc_classification_2026", "source.fei_regulations_2025"]
+    },
+    {
+      "id": "claim.multisport.rule_not_training_evidence",
+      "topics": ["sport", "rules", "training", "evidence", "federation"],
+      "statement_tr": "Bir federasyonun hareketi, skoru veya formati tanimlamasi o antrenman yonteminin bagimsiz etkinlik kaniti degildir.",
+      "limitations_tr": "Kural sorularinda resmi belge; performans sorularinda bagimsiz kanit ve kullanici baglami kullanilmalidir.",
+      "evidence_level": "source_scope_product_rule",
+      "source_ids": ["source.world_athletics_rules_2026", "source.ioc_load_2016"]
+    },
+    {
+      "id": "claim.multisport.load_is_total_stress",
+      "topics": ["sport", "load", "recovery", "season", "match", "travel", "sleep"],
+      "statement_tr": "Spor yuku yalniz set, kilometre veya dakika degildir; fizyolojik, psikolojik ve mekanik stres ile mac, seyahat, uyku ve toparlanma birlikte ele alinmalidir.",
+      "limitations_tr": "Tek bir metrik veya sabit oran butun sporcular icin tani ya da guvenli yuk esigi degildir.",
+      "evidence_level": "international_consensus_statement",
+      "source_ids": ["source.ioc_load_2016"]
+    },
+    {
+      "id": "claim.multisport.cross_training_supports_not_replaces",
+      "topics": ["sport", "cross_training", "conditioning", "strength", "endurance"],
+      "statement_tr": "Capraz antrenman eksik bir kapasiteyi destekleyebilir ancak ana sporun teknik becerisi ve ozgullugunun otomatik olarak yerini almaz.",
+      "limitations_tr": "Aktarim spor, seviye, yontem, doz ve toplam yuke baglidir; ayni tamamlayici program herkese kopyalanmamalidir.",
+      "evidence_level": "systematic_review_plus_product_rule",
+      "source_ids": ["source.endurance_strength_review_2014", "source.elite_resistance_performance_2024", "source.ioc_load_2016"]
+    },
+    {
+      "id": "claim.endurance.strength_can_support_performance",
+      "topics": ["running", "cycling", "swimming", "rowing", "triathlon", "endurance", "strength"],
+      "statement_tr": "Uygun direnç antrenmani bazi antrenmanli dayaniklilik sporcularinda ekonomi ve performans gostergelerini destekleyebilir.",
+      "limitations_tr": "Her sporcuya ayni egzersiz, yuk veya frekans recetesi verilmez; ana spor yuku ve toparlanma hesaba katilmalidir.",
+      "evidence_level": "systematic_review",
+      "source_ids": ["source.endurance_strength_review_2014"]
+    },
+    {
+      "id": "claim.team.neuromuscular_training_context",
+      "topics": ["team_sport", "knee_injury_prevention", "neuromuscular_training", "warm_up"],
+      "statement_tr": "Noromuskuler antrenman bazi kadin takim sporu sporcularinda diz yaralanmasi riskini azaltmayi destekleyebilir.",
+      "limitations_tr": "Kanıt kadin takim sporu populasyonuna aittir; program icerigi, uygulama uyumu ve seans parametreleri sonucu etkiler, kisiye ozel sakatlik garantisi vermez.",
+      "evidence_level": "systematic_review_meta_analysis",
+      "source_ids": ["source.team_nmt_knee_2025"]
+    },
+    {
+      "id": "claim.safety.suspected_concussion_remove_refer",
+      "topics": ["concussion", "head_impact", "combat", "team_sport", "collision", "return_to_sport"],
+      "statement_tr": "Bas darbesi sonrasi sarsinti supheleniliyorsa temas veya oyun durdurulmali ve uygun saglik degerlendirmesi aranmalidir.",
+      "limitations_tr": "Bot sarsinti tanisi, ayni gun donus veya spora donus onayi vermez.",
+      "evidence_level": "international_consensus_statement",
+      "source_ids": ["source.ioc_concussion_2022"]
+    },
+    {
+      "id": "claim.safety.heat_requires_context",
+      "topics": ["heat", "hot_weather", "hydration", "outdoor", "competition"],
+      "statement_tr": "Sicak ortam riski cevre, sicaga alisma, saglik, yogunluk, giysi, hidrasyon ve sogutma planina gore degisir.",
+      "limitations_tr": "Tek bir sicaklik esigi veya herkese sabit sivi miktari kisisel guvenlik garantisi degildir.",
+      "evidence_level": "international_consensus_statement",
+      "source_ids": ["source.ioc_heat_2022"]
+    },
+    {
+      "id": "claim.safety.reds_is_clinical",
+      "topics": ["reds", "low_energy_availability", "weight_class", "aesthetic_sport", "performance"],
+      "statement_tr": "Problemli dusuk enerji mevcudiyeti kadin ve erkek sporcularda saglik ve performansi etkileyebilir; REDs klinik degerlendirme gerektirir.",
+      "limitations_tr": "Bot REDs tanisi koymaz ve hizli kilo kaybi ya da asiri enerji kisitlama protokolu yazmaz.",
+      "evidence_level": "international_consensus_statement",
+      "source_ids": ["source.ioc_reds_2023"]
+    },
+    {
+      "id": "claim.youth.individualized_development",
+      "topics": ["youth", "child", "adolescent", "sport", "development", "training"],
+      "statement_tr": "Genc sporcularda buyume ve olgunlasma bireyseldir; yuk, gelisim ve destek yetiskin programindan dogrudan kopyalanmamalidir.",
+      "limitations_tr": "Ebeveyn, nitelikli antrenor, saglik profesyoneli, okul, uyku ve guvenli cevre baglami gerekir.",
+      "evidence_level": "international_consensus_statement",
+      "source_ids": ["source.ioc_youth_2024"]
+    },
+    {
+      "id": "claim.combat.no_rapid_weight_cut_protocol",
+      "topics": ["combat", "weight_class", "weight_cut", "dehydration", "sauna"],
+      "statement_tr": "Hizli kilo kesme ve dehidrasyon protokolleri sohbet botu tarafindan uretilmemelidir; kilo kategorisi hedefi uzman gozetimi gerektirir.",
+      "limitations_tr": "Bot diuretik, sivi kisitlama, sauna veya plastik kiyafet protokolu vermez.",
+      "evidence_level": "safety_product_rule",
+      "source_ids": ["source.ioc_reds_2023"]
+    },
+    {
+      "id": "claim.climbing.equipment_not_sufficient_alone",
+      "topics": ["climbing", "mountaineering", "belay", "rope", "harness", "equipment"],
+      "statement_tr": "Sertifikali tirmanis ekipmani onemlidir fakat uyumluluk, durum, dogru kullanim ve egitim bilinmeden guvenlik garanti edilemez.",
+      "limitations_tr": "Bot ekipman muayenesi, belay yeterliligi veya rotanin guvenli oldugu onayini vermez.",
+      "evidence_level": "official_safety_standard_plus_product_rule",
+      "source_ids": ["source.uiaa_safety_2026"]
+    },
+    {
+      "id": "claim.antidoping.current_list_required",
+      "topics": ["doping", "supplement", "prohibited", "wada", "competition"],
+      "statement_tr": "Doping ve yasakli madde sorularinda guncel WADA listesi ve ilgili organizasyon kurallari kontrol edilmelidir.",
+      "limitations_tr": "Bot bir takviyenin kontaminasyonsuz, kisi icin guvenli veya yarisma acisindan kesin serbest oldugunu garanti etmez.",
+      "evidence_level": "living_anti_doping_authority",
+      "source_ids": ["source.wada_prohibited_list_2026"]
+    }
+  ]
+}

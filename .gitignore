@@ -1,0 +1,20 @@
+node_modules/
+
+# Local secrets and user allowlists
+.env
+.env.*
+!.env.example
+allowed-users.txt
+admin-users.txt
+*-users.txt
+
+# Local runtime data
+data/
+vendor/
+logs/
+*.log
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/

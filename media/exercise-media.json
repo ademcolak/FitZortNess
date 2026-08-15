@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "media": [
+    {
+      "exercise_id": "0032",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Man_Lifting_Barbell_Deadlift_GIF_Animation_Loop.gif",
+      "media_type": "image/gif",
+      "source": "Wikimedia Commons",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Man_Lifting_Barbell_Deadlift_GIF_Animation_Loop.gif",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "attribution": "Man Lifting Barbell Deadlift GIF Animation Loop.gif from Wikimedia Commons by Videoplasty.com, CC BY-SA 4.0 (degistirilmedi)",
+      "sha256": "56335993238ff308f287fc88c2fc4b94ef5bc21e6d015e4e20f75a36bc6baa3b",
+      "enabled": true
+    },
+    {
+      "exercise_id": "1160",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/0/04/Burpees_WBS.gif",
+      "media_type": "image/gif",
+      "source": "Wikimedia Commons",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Burpees_WBS.gif",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "attribution": "Burpees WBS.gif - Wensceslao / Wikimedia Commons (degistirilmedi)",
+      "sha256": "12ca3f9b8a2aff5b49bcacf7a777da89734cc44ba52d619876f5bc02fbc9c4e8",
+      "enabled": true
+    },
+    {
+      "exercise_id": "0662",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Pushups_wbs.gif",
+      "media_type": "image/gif",
+      "source": "Wikimedia Commons",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Pushups_wbs.gif",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "attribution": "Pushups wbs.gif - Wensceslao / Wikimedia Commons (degistirilmedi)",
+      "sha256": "bd2a03b96fe718e38c767e94a74e674c5bf7d8ed11df526c33ad7715d036e39a",
+      "enabled": true
+    }
+  ]
+}

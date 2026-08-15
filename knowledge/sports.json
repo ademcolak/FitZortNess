@@ -1,0 +1,305 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "sports",
+  "items": [
+    {
+      "id": "sport.general_conditioning",
+      "kind": "sport_profile",
+      "canonical_name": "multisport_conditioning",
+      "aliases": ["functional fitness", "fonksiyonel fitness", "cross training", "cross-training", "capraz antrenman"],
+      "classification": "general_multisport_conditioning",
+      "definition_tr": "Birden fazla fiziksel kapasiteyi veya ana sporu destekleyen genel kondisyon ve capraz antrenman baglami.",
+      "family_tags": ["multisport", "conditioning"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["main_sport", "goal", "experience", "recent_load", "weekly_schedule"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.multisport.cross_training_supports_not_replaces"],
+      "authority_source_ids": []
+    },
+    {
+      "id": "sport.running",
+      "kind": "sport_profile",
+      "canonical_name": "running_and_athletics",
+      "aliases": ["kosu", "kosuya", "running", "jogging", "trail running", "yol kosusu", "maraton", "maratona", "yarı maraton", "kros kosu"],
+      "classification": "endurance_or_athletics_discipline",
+      "definition_tr": "Sprintten ultraya, pistten patikaya farkli enerji, teknik ve cevre talepleri olan kosu ve atletizm ailesi.",
+      "family_tags": ["endurance", "athletics", "outdoor"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["discipline_or_distance", "goal", "experience", "recent_load", "surface", "competition_date"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.endurance.strength_can_support_performance"],
+      "authority_source_ids": ["source.world_athletics_rules_2026"]
+    },
+    {
+      "id": "sport.cycling",
+      "kind": "sport_profile",
+      "canonical_name": "cycling",
+      "aliases": ["bisiklet", "bisikletcilik", "cycling", "road cycling", "mtb", "mountain bike", "bmx", "gravel bike"],
+      "classification": "cycling_discipline",
+      "definition_tr": "Yol, pist, dag bisikleti, BMX ve gravel gibi farkli teknik ve cevre talepleri olan bisiklet ailesi.",
+      "family_tags": ["endurance", "power", "outdoor"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["discipline", "goal", "experience", "recent_load", "equipment", "traffic_or_course"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.endurance.strength_can_support_performance"],
+      "authority_source_ids": ["source.uci_regulations_2026"]
+    },
+    {
+      "id": "sport.swimming",
+      "kind": "sport_profile",
+      "canonical_name": "swimming",
+      "aliases": ["yuzme", "acik su", "acik suda", "acik su yuzme", "havuz yuzme", "swimming", "open water swimming"],
+      "classification": "swimming_discipline",
+      "definition_tr": "Havuz ve acik su kosullariyla stil ve mesafeye gore farklilasan yuzme sporu.",
+      "family_tags": ["endurance", "water", "skill"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["pool_or_open_water", "stroke_or_distance", "goal", "experience", "continuous_capacity", "supervision"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.endurance.strength_can_support_performance"],
+      "authority_source_ids": ["source.world_aquatics_rules_2026"]
+    },
+    {
+      "id": "sport.triathlon",
+      "kind": "sport_profile",
+      "canonical_name": "triathlon_and_multisport",
+      "aliases": ["triatlon", "triathlon", "duatlon", "duathlon", "aquatlon", "aquathlon"],
+      "classification": "multi_discipline_endurance_sport",
+      "definition_tr": "Birden fazla dayaniklilik disiplinini ve gecis becerisini birlestiren multispor ailesi.",
+      "family_tags": ["endurance", "multisport", "water", "outdoor"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["format_or_distance", "discipline_levels", "goal", "recent_load", "competition_date", "open_water_and_cycling_safety"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.endurance.strength_can_support_performance"],
+      "authority_source_ids": []
+    },
+    {
+      "id": "sport.rowing_paddling",
+      "kind": "sport_profile",
+      "canonical_name": "rowing_and_paddling",
+      "aliases": ["kurek", "rowing", "ergometre", "kano", "canoe", "kayak sporu", "dragon boat"],
+      "classification": "rowing_or_paddling_discipline",
+      "definition_tr": "Ergometre, tekne sinifi, ekip ve su kosullarina gore teknik talepleri degisen kurek ve kurekli su sporlari.",
+      "family_tags": ["endurance", "power", "water"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["discipline", "water_or_erg", "boat_class", "goal", "experience", "supervision"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.endurance.strength_can_support_performance"],
+      "authority_source_ids": []
+    },
+    {
+      "id": "sport.football",
+      "kind": "sport_profile",
+      "canonical_name": "association_football",
+      "aliases": ["futbol", "futbolda", "football", "soccer", "futsal"],
+      "classification": "intermittent_team_sport",
+      "definition_tr": "Pozisyon, mac dakikasi, sprint, yon degistirme, teknik ve takim taktiginin birlikte ele alindigi takim sporu.",
+      "family_tags": ["team", "intermittent", "skill", "contact"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["position", "goal", "team_schedule", "match_load", "season_phase", "coach_plan"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.multisport.cross_training_supports_not_replaces", "claim.team.neuromuscular_training_context", "claim.multisport.rules_are_versioned"],
+      "authority_source_ids": [],
+      "authority_bindings": [
+        { "aliases": ["futbol", "futbolda", "football", "soccer"], "source_ids": ["source.ifab_laws_2026"] }
+      ]
+    },
+    {
+      "id": "sport.team_court",
+      "kind": "sport_profile",
+      "canonical_name": "court_and_field_team_sports",
+      "aliases": ["basketbol", "basketball", "voleybol", "volleyball", "hentbol", "handball", "hokey", "field hockey", "ice hockey"],
+      "classification": "intermittent_team_sport",
+      "definition_tr": "Pozisyon, takim antrenmani, mac takvimi, sicrama veya tekrarli sprint yukunun birlikte izlendigi takim sporlaridir.",
+      "family_tags": ["team", "intermittent", "power", "skill"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["sport", "position", "goal", "team_schedule", "match_load", "season_phase"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.multisport.cross_training_supports_not_replaces", "claim.team.neuromuscular_training_context"],
+      "authority_source_ids": [],
+      "authority_bindings": [
+        { "aliases": ["basketbol", "basketball"], "source_ids": ["source.fiba_rules_2024"] },
+        { "aliases": ["voleybol", "volleyball"], "source_ids": ["source.fivb_rules_2025_2028"] }
+      ]
+    },
+    {
+      "id": "sport.rugby_collision",
+      "kind": "sport_profile",
+      "canonical_name": "rugby_and_collision_team_sports",
+      "aliases": ["rugby", "ragbi", "american football", "amerikan futbolu"],
+      "classification": "collision_team_sport",
+      "definition_tr": "Pozisyon, temas tecrubesi, koruyucu ekipman, mac yuku ve bas darbesi riskinin birlikte ele alindigi takim sporlari.",
+      "family_tags": ["team", "collision", "intermittent", "power"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["sport", "position", "contact_experience", "team_schedule", "season_phase", "head_impact_history"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.team.neuromuscular_training_context", "claim.safety.suspected_concussion_remove_refer"],
+      "authority_source_ids": []
+    },
+    {
+      "id": "sport.tennis",
+      "kind": "sport_profile",
+      "canonical_name": "tennis",
+      "aliases": ["tenis", "teniste", "tennis", "tie break", "tiebreak", "beach tennis", "tekerlekli sandalye tenisi"],
+      "classification": "racket_sport",
+      "definition_tr": "Tek veya cift, zemin, dominant taraf, servis ve mac hacmine gore talepleri degisen raket sporu.",
+      "family_tags": ["racket", "intermittent", "agility", "skill"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["singles_or_doubles", "surface", "goal", "experience", "match_schedule", "dominant_hand"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.multisport.rules_are_versioned"],
+      "authority_source_ids": ["source.itf_rules_2026"]
+    },
+    {
+      "id": "sport.racket_other",
+      "kind": "sport_profile",
+      "canonical_name": "other_racket_sports",
+      "aliases": ["badminton", "masa tenisi", "table tennis", "ping pong", "squash", "padel"],
+      "classification": "racket_sport",
+      "definition_tr": "Kort veya masa, tek/cift, dominant taraf ve tekrarli hizlanma talepleriyle ayrisan raket sporlaridir.",
+      "family_tags": ["racket", "intermittent", "agility", "skill"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["sport", "format", "goal", "experience", "facility_or_partner", "match_schedule"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.multisport.rules_are_versioned"],
+      "authority_source_ids": [],
+      "authority_bindings": [
+        { "aliases": ["masa tenisi", "table tennis", "ping pong"], "source_ids": ["source.ittf_statutes_2026"] }
+      ]
+    },
+    {
+      "id": "sport.grappling_combat",
+      "kind": "sport_profile",
+      "canonical_name": "grappling_combat_sports",
+      "aliases": ["gures", "gurese", "serbest gures", "wrestling", "greko", "grekoromen", "judo", "bjj", "brazilian jiu jitsu", "grappling"],
+      "classification": "grappling_combat_sport",
+      "definition_tr": "Stil ve kural setine gore tutus, dusurme, yer calismasi ve temas talepleri degisen mucadele sporlaridir.",
+      "family_tags": ["combat", "contact", "strength", "skill"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["style_and_ruleset", "goal", "experience", "coach_and_gym", "sparring_level", "weight_class"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.safety.suspected_concussion_remove_refer", "claim.combat.no_rapid_weight_cut_protocol"],
+      "authority_source_ids": [],
+      "authority_bindings": [
+        { "aliases": ["gures", "gurese", "serbest gures", "wrestling", "greko", "grekoromen"], "source_ids": ["source.uww_rules_2026"] },
+        { "aliases": ["judo"], "source_ids": ["source.ijf_rules_2026"] }
+      ]
+    },
+    {
+      "id": "sport.striking_combat",
+      "kind": "sport_profile",
+      "canonical_name": "striking_and_mixed_combat_sports",
+      "aliases": ["boks", "boxing", "kickboks", "kickboxing", "muay thai", "taekwondo", "karate", "mma", "mixed martial arts"],
+      "classification": "striking_or_mixed_combat_sport",
+      "definition_tr": "Kural seti, raund, temas, koruyucu ekipman ve kilo kategorisine gore talepleri degisen vurus veya karma dovus sporlaridir.",
+      "family_tags": ["combat", "contact", "power", "skill"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["sport_and_ruleset", "goal", "experience", "coach_and_gym", "sparring_level", "weight_class"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.safety.suspected_concussion_remove_refer", "claim.combat.no_rapid_weight_cut_protocol"],
+      "authority_source_ids": []
+    },
+    {
+      "id": "sport.weightlifting",
+      "kind": "sport_profile",
+      "canonical_name": "olympic_weightlifting",
+      "aliases": ["olimpik halter", "weightlifting", "snatch", "koparma", "clean and jerk", "silkme"],
+      "classification": "measured_strength_power_sport",
+      "definition_tr": "Koparma ve silkme yarisma kaldirislarinda teknik, hiz, guc ve platform ekipmaninin birlikte onemli oldugu spor.",
+      "family_tags": ["strength_power", "technical", "weight_class"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["goal", "experience", "current_lifts", "coach", "equipment", "competition_date"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.multisport.rules_are_versioned", "claim.combat.no_rapid_weight_cut_protocol"],
+      "authority_source_ids": ["source.iwf_rules_2026"]
+    },
+    {
+      "id": "sport.powerlifting",
+      "kind": "sport_profile",
+      "canonical_name": "powerlifting_and_strongman",
+      "aliases": ["powerlifting", "guc ucgeni", "strongman", "strongwoman"],
+      "classification": "maximal_strength_sport",
+      "definition_tr": "Federasyon veya organizasyona gore kaldiris standardi, ekipman ve etkinlikleri degisen maksimal kuvvet sporlari.",
+      "family_tags": ["strength_power", "maximal_attempt", "weight_class"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["sport_or_federation", "goal", "experience", "current_lifts", "equipment", "competition_date"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.multisport.rules_are_versioned"],
+      "authority_source_ids": [],
+      "authority_bindings": [
+        { "aliases": ["powerlifting", "guc ucgeni"], "source_ids": ["source.ipf_rules_2026"] }
+      ]
+    },
+    {
+      "id": "sport.gymnastics",
+      "kind": "sport_profile",
+      "canonical_name": "gymnastics_and_acrobatics",
+      "aliases": ["jimnastik", "gymnastics", "artistik jimnastik", "ritmik jimnastik", "trambolin", "trampoline", "akrobasi", "parkour"],
+      "classification": "judged_skill_and_acrobatic_sport",
+      "definition_tr": "Alet, beceri seviyesi, minder, koc veya spotter ve dusme riskinin programdan once bilinmesi gereken beceri sporlaridir.",
+      "family_tags": ["gymnastics_skill", "power", "mobility", "judged_skill"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["discipline_or_apparatus", "skill_level", "goal", "coach_or_spotter", "facility_and_mat", "weekly_schedule"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.multisport.rules_are_versioned"],
+      "authority_source_ids": ["source.fig_rules_2026"]
+    },
+    {
+      "id": "sport.climbing",
+      "kind": "sport_profile",
+      "canonical_name": "climbing_and_mountaineering",
+      "aliases": ["tirmanis", "climbing", "boulder", "bouldering", "lead climbing", "sport climbing", "dagcilik", "mountaineering", "via ferrata"],
+      "classification": "climbing_or_mountaineering_discipline",
+      "definition_tr": "Disiplin, rota derecesi, dusme sistemi, partner, belay yeterliligi, ekipman ve cevre kosullarinin birlikte ele alindigi spor ailesi.",
+      "family_tags": ["climbing", "skill", "strength", "outdoor"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["discipline", "grade_or_experience", "goal", "partner_or_belay", "equipment", "indoor_or_outdoor"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.climbing.equipment_not_sufficient_alone"],
+      "authority_source_ids": ["source.uiaa_safety_2026"]
+    },
+    {
+      "id": "sport.water",
+      "kind": "sport_profile",
+      "canonical_name": "other_water_sports",
+      "aliases": ["su topu", "water polo", "surf", "surfing", "yelken", "sailing", "dalis", "dalış", "diving", "serbest dalis", "kitesurf", "windsurf"],
+      "classification": "water_sport",
+      "definition_tr": "Yuzme yeterliligi, gozetim, su ve hava kosullari, can yeleği veya teknik ekipman baglaminin oncelikli oldugu su sporlari.",
+      "family_tags": ["water", "skill", "outdoor"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["discipline", "swimming_ability", "goal", "experience", "supervision", "water_and_weather"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.safety.heat_requires_context"],
+      "authority_source_ids": []
+    },
+    {
+      "id": "sport.winter",
+      "kind": "sport_profile",
+      "canonical_name": "winter_and_snow_sports",
+      "aliases": ["kayak", "ski", "skiing", "snowboard", "biatlon", "biathlon", "kayakli kosu", "cross country skiing", "buz pateni", "ice skating"],
+      "classification": "winter_sport",
+      "definition_tr": "Disiplin, pist veya rota, kar-buz, hava, ekipman, ders veya rehber ve seviye baglaminin oncelikli oldugu kis sporlaridir.",
+      "family_tags": ["winter_outdoor", "skill", "endurance", "power"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["discipline", "goal", "experience", "route_or_piste", "weather", "equipment_and_supervision"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.safety.heat_requires_context", "claim.multisport.rules_are_versioned"],
+      "authority_source_ids": [],
+      "authority_bindings": [
+        { "aliases": ["kayak", "ski", "skiing", "snowboard", "kayakli kosu", "cross country skiing"], "source_ids": ["source.fis_rules_2026"] }
+      ]
+    },
+    {
+      "id": "sport.precision",
+      "kind": "sport_profile",
+      "canonical_name": "precision_sports",
+      "aliases": ["okculuk", "archery", "aticilik", "shooting sport", "golf", "dart"],
+      "classification": "precision_and_accuracy_sport",
+      "definition_tr": "Ekipman, saha guvenligi, dominant taraf, teknik tekrar ve dikkat kontrolunun kondisyon kadar onemli oldugu hassasiyet sporlaridir.",
+      "family_tags": ["precision", "accuracy", "skill"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["sport", "goal", "experience", "equipment", "facility_and_supervision", "dominant_side"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.multisport.rules_are_versioned"],
+      "authority_source_ids": []
+    },
+    {
+      "id": "sport.para",
+      "kind": "sport_profile",
+      "canonical_name": "para_sport",
+      "aliases": ["para atletizm", "para spor", "paralimpik spor", "tekerlekli sandalye sporu", "goalball", "boccia"],
+      "classification": "adaptive_or_para_sport",
+      "definition_tr": "Siniflandirma, erisilebilirlik, kullaniciya ozgu ekipman ve spor dalinin kendi taleplerinin birlikte ele alindigi para spor baglami.",
+      "family_tags": ["para_sport", "adaptive", "multisport"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["sport", "goal", "experience", "accessibility_needs", "equipment", "coach_or_club"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.multisport.rules_are_versioned"],
+      "authority_source_ids": ["source.ipc_classification_2026"]
+    },
+    {
+      "id": "sport.equestrian",
+      "kind": "sport_profile",
+      "canonical_name": "equestrian_sport",
+      "aliases": ["binicilik", "equestrian", "dressage", "engel atlama", "show jumping", "eventing"],
+      "classification": "equestrian_discipline",
+      "definition_tr": "Sporcu, at refahi, tesis, egitmen, ekipman ve disiplin kurallarinin birlikte ele alinmasi gereken binicilik sporlari.",
+      "family_tags": ["equestrian", "skill", "outdoor"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["discipline", "goal", "experience", "facility", "instructor", "horse_and_equipment_context"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.multisport.rules_are_versioned"],
+      "authority_source_ids": ["source.fei_regulations_2025"]
+    },
+    {
+      "id": "sport.motorsport",
+      "kind": "sport_profile",
+      "canonical_name": "motorsport",
+      "aliases": ["motor sporu", "motorsport", "karting", "ralli", "rally", "motokros", "motocross", "pist yarisi"],
+      "classification": "vehicle_motorsport_discipline",
+      "definition_tr": "Arac, pist, lisans, koruyucu ekipman, teknik duzenleme ve ucuncu kisi guvenliginin fiziksel kondisyonla birlikte ele alindigi motor sporlari.",
+      "family_tags": ["motorsport", "high_velocity_equipment", "skill"],
+      "inference_policy": { "name_alone_is_sufficient": false, "required_user_fields": ["discipline", "goal", "experience", "vehicle_and_track", "license_and_supervision", "safety_equipment"] },
+      "claim_ids": ["claim.multisport.context_required", "claim.multisport.load_is_total_stress", "claim.multisport.rules_are_versioned"],
+      "authority_source_ids": [],
+      "authority_bindings": [
+        { "aliases": ["motor sporu", "motorsport", "karting", "ralli", "rally", "pist yarisi"], "source_ids": ["source.fia_safety_2026"] }
+      ]
+    }
+  ]
+}
