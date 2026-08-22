@@ -1,6 +1,6 @@
-import { AsyncLocalStorage } from "node:async_hooks";
 import { config } from "./config.js";
 import { COACH_TOOLS, createCoachToolExecutor, getActiveCoachDrafts, migrateLegacyConversationState } from "./coachTools.js";
+import { getConversationTurn, recordAssistantMessage, runInConversationTurn } from "./conversationContext.js";
 import { conversationTracker } from "./conversationTracker.js";
 import { getDb, getOrCreateUser, getProfile, getRecentMessages, logCoachInteraction, logError, logInteraction, parseJson } from "./db.js";
 import { assertByteLengthWithinLimit, readResponseBufferWithLimit } from "./downloadLimits.js";
@@ -16,7 +16,6 @@ import { createSessionEvaluator } from "./sessionEvaluator.js";
 import { getTelegramCommandSetupOperations } from "./telegramCommands.js";
 import { sendApprovedAnimation } from "./telegramMedia.js";
 
-const conversationContext = new AsyncLocalStorage();
 const sessionEvaluator = createSessionEvaluator({ tracker: conversationTracker, evaluateWithModel: evaluateConversationSession });
 const WELCOME_TEXT = "Merhaba! Ben FitZortNess, antrenman programi olusturma, program analizi ve genel fitness sorularinda yardimci oluyorum. Ne istersen dogal bir cumleyle yazabilirsin, ornegin \"kas kazanimi icin 4 gunluk program hazirla\" gibi.";
 const ADMIN_COMMANDS = new Set([
@@ -107,17 +106,8 @@ export async function handleMessage(message) {
       feature: "image_analysis",
       textLength: caption.length
     });
-    if (caption) {
-      conversationTracker.recordMessage({
-        sessionId,
-        userId: user.id,
-        role: "user",
-        content: caption,
-        includeInContext: false
-      });
-    }
-    return conversationContext.run(
-      { sessionId, userId: user.id, includeAssistantInContext: true },
+    return runInConversationTurn(
+      { kind: "coaching", sessionId, userId: user.id, userMessage: caption },
       () => handleImageMessage(chatId, user.id, message)
     );
   }
@@ -136,19 +126,14 @@ export async function handleMessage(message) {
     textLength: text.length
   });
 
-  const retainRawMessages = !isAdminCommand;
-  const includeAssistantInContext = !isAdminCommand;
-  if (retainRawMessages) {
-    conversationTracker.recordMessage({
-      sessionId,
-      userId: user.id,
-      role: "user",
-      content: text,
-      includeInContext: !isAdminCommand
-    });
-  }
+  const turn = {
+    kind: isAdminCommand ? "administration" : "coaching",
+    sessionId,
+    userId: user.id,
+    userMessage: text
+  };
 
-  return conversationContext.run({ sessionId, userId: user.id, retainRawMessages, includeAssistantInContext }, async () => {
+  return runInConversationTurn(turn, async () => {
     if (text === "/help" && isAdminUser) return send(chatId, adminHelpText());
     if (text.startsWith("/admin")) return handleAdminCommand(chatId, telegramUserId, text);
 
@@ -213,7 +198,7 @@ async function handleImageMessage(chatId, userId, message) {
     return;
   }
 
-  await send(chatId, "Gorseli okuyorum. Program satirlarini cikartip analiz edecegim.");
+  await sendTransient(chatId, "Gorseli okuyorum. Program satirlarini cikartip analiz edecegim.");
 
   try {
     const file = await getTelegramImageFile(message);
@@ -226,14 +211,14 @@ async function handleImageMessage(chatId, userId, message) {
     await respondToImageAnalysis(chatId, userId, extracted);
   } catch (error) {
     logError({ userId, scope: "image_analysis", error });
-    await send(chatId, `Gorseli okuyamadim: ${error.message}\nDaha net bir screenshot/fotograf dene veya programi metin olarak gonder.`);
+    await sendTransient(chatId, `Gorseli okuyamadim: ${error.message}\nDaha net bir screenshot/fotograf dene veya programi metin olarak gonder.`);
   }
 }
 
 function recordCoachInteraction(userId, modelAction, coachResult) {
   logCoachInteraction({
     userId,
-    sessionId: conversationContext.getStore()?.sessionId,
+    sessionId: getConversationTurn()?.sessionId,
     modelAction,
     model: config.llmModel,
     coachResult
@@ -535,25 +520,17 @@ function getConversationHistory(userId, currentUserMessage = "") {
 }
 
 async function send(chatId, text) {
-  const chunks = chunk(text, 3900);
-  for (const part of chunks) {
+  await deliver(chatId, text);
+  recordAssistantMessage(text);
+}
+
+async function sendTransient(chatId, text) {
+  await deliver(chatId, text);
+}
+
+async function deliver(chatId, text) {
+  for (const part of chunk(text, 3900)) {
     await telegram("sendMessage", { chat_id: chatId, text: part });
-  }
-  const context = conversationContext.getStore();
-  if (context?.retainRawMessages) {
-    try {
-      conversationTracker.recordMessage({
-        sessionId: context.sessionId,
-        userId: context.userId,
-        role: "assistant",
-        content: text,
-        includeInContext: context.includeAssistantInContext
-      });
-    } catch (error) {
-      if (error.code !== "CONVERSATION_SESSION_MISSING") {
-        logError({ scope: "conversation_assistant_record", error });
-      }
-    }
   }
 }
 

@@ -74,6 +74,7 @@ src/
   knowledgeBase.js        Kaynaklı spor/antrenman bilgi tabanı erişimi
   safetyPolicy.js         Acil/önleyici sağlık triyaj kuralları
   conversationTracker.js  Oturum/konuşma kaydı ve analitik
+  conversationContext.js  Tur bağlamı: kullanıcı/asistan mesajlarının kaydını tek yerden yönetir
   db.js                  SQLite şeması ve erişim katmanı
 knowledge/    Kaynak, iddia ve spor tanımı JSON'ları (şema doğrulamalı)
 media/        Onaylı egzersiz GIF manifesti ve atıflar
