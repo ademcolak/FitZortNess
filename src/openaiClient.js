@@ -19,25 +19,17 @@ export async function coachReply(input, provider = coachProvider) {
 
 export async function coachAgentReplyWithMetadata({ userMessage, profile, memorySummary, conversationHistory = [], activeDrafts = [], fallbackText, tools, executeTool }, provider = coachProvider) {
   try {
-    const payload = buildCoachRequestPayload({
-      userMessage,
-      profile,
-      memorySummary,
-      conversationHistory,
-      activeDrafts
-    });
+    const context = buildCoachContext({ userMessage, profile, memorySummary, activeDrafts });
     const result = await provider.runAgent({
       systemPrompt: buildCoachSystemPrompt(config.botPersona, "agent"),
-      userText: JSON.stringify(payload),
+      context: JSON.stringify(context),
+      history: conversationHistory,
+      userText: userMessage,
       tools,
       executeTool
     });
     if (!result?.text) return { text: fallbackText, usedModel: false, toolCalls: result?.toolCalls || [], contextClaimIds: [], contextSourceIds: [] };
-    const contextClaimIds = payload.knowledge_context.claims.map((claim) => claim.id);
-    const contextSourceIds = [...new Set([
-      ...payload.knowledge_context.claims.flatMap((claim) => claim.sources.map((source) => source.id)),
-      ...payload.knowledge_context.items.flatMap((item) => item.authoritySources.map((source) => source.id))
-    ])];
+    const { contextClaimIds, contextSourceIds } = knowledgeReferences(context);
     return { text: result.text, usedModel: true, toolCalls: result.toolCalls, contextClaimIds, contextSourceIds };
   } catch (error) {
     return { text: fallbackText, usedModel: false, toolCalls: [], contextClaimIds: [], contextSourceIds: [], error };
@@ -46,38 +38,38 @@ export async function coachAgentReplyWithMetadata({ userMessage, profile, memory
 
 export async function coachReplyWithMetadata({ userMessage, profile, memorySummary, conversationHistory = [], engineResult = null, fallbackText, responseMode = "conversation" }, provider = coachProvider) {
   try {
-    const payload = buildCoachRequestPayload({
-      userMessage,
-      profile,
-      memorySummary,
-      conversationHistory,
-      engineResult
-    });
+    const context = buildCoachContext({ userMessage, profile, memorySummary, engineResult });
     const text = await provider.generateText({
       systemPrompt: buildCoachSystemPrompt(config.botPersona, responseMode),
-      userText: JSON.stringify(payload)
+      context: JSON.stringify(context),
+      history: conversationHistory,
+      userText: userMessage
     });
     if (!text) return { text: fallbackText, usedModel: false, contextClaimIds: [], contextSourceIds: [] };
-    const contextClaimIds = payload.knowledge_context.claims.map((claim) => claim.id);
-    const contextSourceIds = [...new Set([
-      ...payload.knowledge_context.claims.flatMap((claim) => claim.sources.map((source) => source.id)),
-      ...payload.knowledge_context.items.flatMap((item) => item.authoritySources.map((source) => source.id))
-    ])];
+    const { contextClaimIds, contextSourceIds } = knowledgeReferences(context);
     return { text, usedModel: true, contextClaimIds, contextSourceIds };
   } catch {
     return { text: fallbackText, usedModel: false, contextClaimIds: [], contextSourceIds: [] };
   }
 }
 
-export function buildCoachRequestPayload({ userMessage, profile, memorySummary, conversationHistory = [], engineResult = null, activeDrafts = [] }) {
+export function buildCoachContext({ userMessage, profile, memorySummary, engineResult = null, activeDrafts = [] }) {
   return {
-    user_message: userMessage,
     profile,
     memory_summary: memorySummary,
-    conversation_history: conversationHistory,
     active_drafts: activeDrafts,
     engine_result: engineResult,
     knowledge_context: retrieveKnowledge(userMessage)
+  };
+}
+
+function knowledgeReferences({ knowledge_context: knowledge }) {
+  return {
+    contextClaimIds: knowledge.claims.map((claim) => claim.id),
+    contextSourceIds: [...new Set([
+      ...knowledge.claims.flatMap((claim) => claim.sources.map((source) => source.id)),
+      ...knowledge.items.flatMap((item) => item.authoritySources.map((source) => source.id))
+    ])]
   };
 }
 

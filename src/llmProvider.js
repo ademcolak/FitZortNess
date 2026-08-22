@@ -11,7 +11,7 @@ export function createLlmProvider({
   const normalizedBaseUrl = String(baseUrl).replace(/\/+$/, "");
 
   return {
-    async generateText({ systemPrompt, userText }) {
+    async generateText({ systemPrompt, context = null, history = [], userText }) {
       if (!enabled) return null;
       if (!model) throw new Error("LLM model is required when the provider is enabled.");
 
@@ -20,41 +20,24 @@ export function createLlmProvider({
         throw new Error(`Unsupported LLM_API_STYLE: ${apiStyle}`);
       }
 
-      const response = await fetchImpl(`${normalizedBaseUrl}/${isChatCompletions ? "chat/completions" : "responses"}`, {
-        method: "POST",
-        headers: {
-          ...(apiKey ? { "Authorization": `Bearer ${apiKey}` } : {}),
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(isChatCompletions
-          ? {
-              model,
-              messages: [
-                { role: "system", content: systemPrompt },
-                { role: "user", content: userText }
-              ],
-              max_tokens: maxOutputTokens
-            }
-          : {
-              model,
-              input: [
-                { role: "system", content: [{ type: "input_text", text: systemPrompt }] },
-                { role: "user", content: [{ type: "input_text", text: userText }] }
-              ],
-              max_output_tokens: maxOutputTokens
-            }),
-        signal: timeoutMs > 0 ? AbortSignal.timeout(timeoutMs) : undefined
+      const prompt = { systemPrompt, context, history, userText };
+      const data = await requestJson({
+        url: `${normalizedBaseUrl}/${isChatCompletions ? "chat/completions" : "responses"}`,
+        apiKey,
+        timeoutMs,
+        fetchImpl,
+        body: isChatCompletions
+          ? { model, messages: buildChatCompletionsMessages(prompt), max_tokens: maxOutputTokens }
+          : { model, input: buildResponsesInput(prompt), max_output_tokens: maxOutputTokens }
       });
-
-      if (!response.ok) throw new Error(`LLM request failed with status ${response.status}.`);
-      const data = await response.json();
       return isChatCompletions ? extractChatCompletionsText(data) : extractResponsesText(data);
     },
 
-    async runAgent({ systemPrompt, userText, tools = [], executeTool, maxToolRounds = 6 }) {
+    async runAgent({ systemPrompt, context = null, history = [], userText, tools = [], executeTool, maxToolRounds = 6 }) {
       if (!enabled) return null;
       if (!model) throw new Error("LLM model is required when the provider is enabled.");
       if (typeof executeTool !== "function") throw new Error("Agent tool executor is required.");
+      const prompt = { systemPrompt, context, history, userText };
       if (apiStyle === "responses") {
         return runResponsesAgent({
           normalizedBaseUrl,
@@ -63,8 +46,7 @@ export function createLlmProvider({
           maxOutputTokens,
           timeoutMs,
           fetchImpl,
-          systemPrompt,
-          userText,
+          prompt,
           tools,
           executeTool,
           maxToolRounds
@@ -78,8 +60,7 @@ export function createLlmProvider({
           maxOutputTokens,
           timeoutMs,
           fetchImpl,
-          systemPrompt,
-          userText,
+          prompt,
           tools,
           executeTool,
           maxToolRounds
@@ -90,11 +71,8 @@ export function createLlmProvider({
   };
 }
 
-async function runResponsesAgent({ normalizedBaseUrl, apiKey, model, maxOutputTokens, timeoutMs, fetchImpl, systemPrompt, userText, tools, executeTool, maxToolRounds }) {
-  const input = [
-    { role: "system", content: [{ type: "input_text", text: systemPrompt }] },
-    { role: "user", content: [{ type: "input_text", text: userText }] }
-  ];
+async function runResponsesAgent({ normalizedBaseUrl, apiKey, model, maxOutputTokens, timeoutMs, fetchImpl, prompt, tools, executeTool, maxToolRounds }) {
+  const input = buildResponsesInput(prompt);
   const toolCalls = [];
 
   for (let round = 0; round <= maxToolRounds; round += 1) {
@@ -125,11 +103,8 @@ async function runResponsesAgent({ normalizedBaseUrl, apiKey, model, maxOutputTo
   return { text: null, toolCalls };
 }
 
-async function runChatCompletionsAgent({ normalizedBaseUrl, apiKey, model, maxOutputTokens, timeoutMs, fetchImpl, systemPrompt, userText, tools, executeTool, maxToolRounds }) {
-  const messages = [
-    { role: "system", content: systemPrompt },
-    { role: "user", content: userText }
-  ];
+async function runChatCompletionsAgent({ normalizedBaseUrl, apiKey, model, maxOutputTokens, timeoutMs, fetchImpl, prompt, tools, executeTool, maxToolRounds }) {
+  const messages = buildChatCompletionsMessages(prompt);
   const toolCalls = [];
 
   for (let round = 0; round <= maxToolRounds; round += 1) {
@@ -155,6 +130,34 @@ async function runChatCompletionsAgent({ normalizedBaseUrl, apiKey, model, maxOu
   }
 
   return { text: null, toolCalls };
+}
+
+function buildResponsesInput({ systemPrompt, context, history, userText }) {
+  const asInput = (text) => [{ type: "input_text", text }];
+  return [
+    { role: "system", content: asInput(systemPrompt) },
+    ...conversationTurns(history).map((turn) => (turn.role === "assistant"
+      ? { role: "assistant", content: [{ type: "output_text", text: turn.content }] }
+      : { role: "user", content: asInput(turn.content) })),
+    ...(context ? [{ role: "system", content: asInput(context) }] : []),
+    { role: "user", content: asInput(userText) }
+  ];
+}
+
+function buildChatCompletionsMessages({ systemPrompt, context, history, userText }) {
+  return [
+    { role: "system", content: systemPrompt },
+    ...conversationTurns(history),
+    ...(context ? [{ role: "system", content: context }] : []),
+    { role: "user", content: userText }
+  ];
+}
+
+function conversationTurns(history) {
+  return (Array.isArray(history) ? history : [])
+    .filter((turn) => turn?.role === "user" || turn?.role === "assistant")
+    .map((turn) => ({ role: turn.role, content: String(turn.content || "") }))
+    .filter((turn) => turn.content !== "");
 }
 
 async function requestJson({ url, apiKey, timeoutMs, fetchImpl, body }) {

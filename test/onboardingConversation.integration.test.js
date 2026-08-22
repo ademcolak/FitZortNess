@@ -17,8 +17,8 @@ function runMessages(messages, { userId = 123, adminUserIds = "999", initialStat
         return new Response(JSON.stringify({ ok: true, result: {} }), { status: 200 });
       }
       const body = JSON.parse(options.body || "{}");
-      const userInput = body.input?.find((item) => item.role === "user")?.content?.find((item) => item.type === "input_text")?.text || "{}";
-      const currentMessage = JSON.parse(userInput).user_message || "";
+      const userTurns = (body.input || []).filter((item) => item.role === "user");
+      const currentMessage = userTurns.at(-1)?.content?.find((part) => part.type === "input_text")?.text || "";
       const hasToolOutput = body.input?.some((item) => item.type === "function_call_output");
       if (!hasToolOutput && /program hazirla/i.test(currentMessage)) {
         return new Response(JSON.stringify({
@@ -146,4 +146,12 @@ test("removed admin help alias has no effect", () => {
   assert.equal(result.interactionCount, 0);
   assert.equal(result.stateCount, 0);
   assert.deepEqual(result.sent, []);
+});
+
+test("an older wait message never displaces the current request", () => {
+  const result = runMessages(["simdilik bekleyelim, sonra bakariz", "bana program hazirla"]);
+
+  assert.equal(result.stateCount, 0);
+  assert.equal(result.draftCount, 1);
+  assert.match(result.sent.at(-1), /hedefini/i);
 });

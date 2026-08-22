@@ -50,3 +50,11 @@ test("multisport answers respect rules, anti-doping, and high-risk technique bou
   assert.match(prompt, /hizli kilo kesme/i);
   assert.match(prompt, /klasik gym programina sessizce donme/i);
 });
+
+test("the agent prompt no longer compensates for turns the transport now carries", () => {
+  const prompt = buildCoachSystemPrompt("", "agent");
+
+  assert.doesNotMatch(prompt, /user_message/);
+  assert.doesNotMatch(prompt, /guncel istek gibi yorumlama/i);
+  assert.match(prompt, /taslagi koru/i);
+});

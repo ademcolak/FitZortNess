@@ -42,8 +42,15 @@ function runPhotoThenQuestion({ caption, question, userId = 321, extractionFails
       }
 
       const body = JSON.parse(options.body || "{}");
-      const userText = body.input?.find((item) => item.role === "user")?.content?.find((item) => item.type === "input_text")?.text || "{}";
-      coachPayloads.push({ isAgent: Array.isArray(body.tools), payload: JSON.parse(userText) });
+      const textOf = (item) => (item.content || []).map((part) => part.text).filter(Boolean).join("");
+      const turns = (body.input || []).filter((item) => item.role);
+      const conversation = turns.filter((item) => item.role !== "system");
+      coachPayloads.push({
+        isAgent: Array.isArray(body.tools),
+        userMessage: textOf(conversation.at(-1)),
+        history: conversation.slice(0, -1).map((item) => ({ role: item.role, content: textOf(item) })),
+        context: JSON.parse(textOf(turns.filter((item) => item.role === "system").at(-1)) || "{}")
+      });
       return json({ output_text: body.tools ? ${JSON.stringify(FOLLOW_UP_REPLY)} : ${JSON.stringify(ANALYSIS_REPLY)} });
     };
 
@@ -87,9 +94,9 @@ test("a question after an image analysis can refer back to the analysis", () => 
 
   const followUp = result.coachPayloads.at(-1);
   assert.equal(followUp.isAgent, true);
-  assert.equal(followUp.payload.user_message, "peki bunu 4 gune cikaralim mi");
+  assert.equal(followUp.userMessage, "peki bunu 4 gune cikaralim mi");
 
-  const history = followUp.payload.conversation_history;
+  const history = followUp.history;
   assert.ok(
     history.some((item) => item.role === "user" && item.content === caption),
     `caption missing from history: ${JSON.stringify(history)}`
@@ -105,7 +112,7 @@ test("the transient reading notice never becomes part of the coach context", () 
 
   assert.ok(result.sent.some((text) => text.includes("Gorseli okuyorum")), "the reading notice should still reach the user");
 
-  const history = result.coachPayloads.at(-1).payload.conversation_history;
+  const history = result.coachPayloads.at(-1).history;
   assert.ok(
     history.every((item) => !item.content.includes("Gorseli okuyorum")),
     `stale progress notice leaked into history: ${JSON.stringify(history)}`
@@ -121,7 +128,7 @@ test("a failed image read keeps upstream error detail out of the coach context",
 
   assert.ok(result.sent.some((text) => text.startsWith("Gorseli okuyamadim:")), "the failure should still reach the user");
 
-  const history = result.coachPayloads.at(-1).payload.conversation_history;
+  const history = result.coachPayloads.at(-1).history;
   assert.ok(
     history.every((item) => !item.content.includes("upstream detail leaked here")),
     `upstream error detail leaked into history: ${JSON.stringify(history)}`

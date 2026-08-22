@@ -244,7 +244,7 @@ async function respondToImageAnalysis(chatId, userId, extracted, profileOverride
     extracted.uncertain?.length ? `\nEmin olamadigim satirlar:\n- ${extracted.uncertain.join("\n- ")}` : ""
   ].join("");
   const coachResult = await coachReplyWithMetadata({
-    userMessage: "Kullanici programini gorsel olarak gonderdi.",
+    userMessage: "Programimi gorsel olarak gonderdim.",
     profile,
     memorySummary: getMemory(userId),
     conversationHistory: getConversationHistory(userId),
